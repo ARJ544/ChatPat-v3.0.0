@@ -1,9 +1,9 @@
-# ChatPat-v3.0.0
+# ChatPat-v3.0.0 (UNDER_DEVELOPMENT)
 ChatPat is a family of multimodal, generative artificial intelligence (AI) models developed by Abhinav (ARJ) that can understand and combine information from formats like text, also can analyze Documents, Images, Pdf.
 
 This is still (UNDER_DEVELOPMENT)
 
-## Features:
+## Added Features in v3.0.0:
 - analyze Documents
 - Images
 - Pdf
