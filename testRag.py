@@ -1,3 +1,4 @@
+##### *** SEE "testRag.ipynb" FILE AS IT IS UPDATED, ORGANIZED AND HANDLES ERROR CHECK ***
 from google import genai
 from google.genai import types
 import os
