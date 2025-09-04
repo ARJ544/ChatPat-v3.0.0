@@ -35,3 +35,4 @@ Server running on http://localhost:3000
 
 ### Console Based RAG - done
 + testRag.ipynb contains all the RAG System
++ If testRag.ipynb is not opening then consider downloading the code and open in IDE.
