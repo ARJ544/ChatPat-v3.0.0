@@ -33,5 +33,5 @@ Server running on http://localhost:3000
 
 + If not showing again SetUp.
 
-### When it will be started?
-+ After I understand and research about it😃
+### Console Based RAG - done
++ testRag.ipynb contains all the RAG System
