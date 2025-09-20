@@ -1,13 +1,12 @@
-Based on the provided context, there is no direct explanation of the difference between speed and velocity in a tabular format. The context discusses acceleration, changes in velocity, and calculations of speed and average speed in a falling object scenario.
+Force is described as the cause of motion. It is needed to change the speed or the direction of an object's motion. The weight of an object is the force with which it is attracted towards the earth.
 
-However, I can provide the difference between speed and velocity based on general physics principles.
+The formula for force is given by:
+F = m × a
 
-| Feature        | Speed                                   | Velocity                                           |
-|----------------|-----------------------------------------|----------------------------------------------------|
-| **Definition** | The rate at which an object covers distance. | The rate at which an object changes its position.  |
-| **Nature**     | Scalar quantity                         | Vector quantity                                    |
-| **Information**| Only magnitude                          | Magnitude and direction                            |
-| **Change**     | Changes if the object speeds up, slows down, or changes direction. | Changes if the object's speed or direction (or both) changes. |
-| **Example**    | A car travels at 60 km/h.               | A car travels at 60 km/h **north**.                |
+When considering the force due to gravity, the formula becomes:
+F = m × g
+
+And for the weight of an object:
+W = m × g
 
 Source: physics9.pdf
