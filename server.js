@@ -22,16 +22,7 @@ console.log("API Key:", process.env.GEMINI_API_KEY);
 app.post("/generate", async (req, res) => {
 
   try {
-    const prompt = req.body.prompt;
-    const role = "";
-    console.log(prompt);
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: role + prompt,
-    });
-
-    res.json(response.text)
+    
 
   } catch (error) {
     res.status(500).json({ error: error.message });
