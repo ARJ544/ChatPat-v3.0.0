@@ -11,6 +11,7 @@ testRag.py
 ARJ.pdf
 plans.md
 local_cache/
+unknown_pdfs/
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
