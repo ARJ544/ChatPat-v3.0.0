@@ -128,7 +128,7 @@ def embed_query(query_text):
 
 
 @app.post("/extract")
-async def extract(file: UploadFile = File(...)):
+async def extract(file: UploadFile = File(...), userName: str = Form(...)):
     if file.content_type not in ["application/pdf", "application/octet-stream"]:
         return JSONResponse(
             status_code=400,
@@ -163,7 +163,7 @@ async def extract(file: UploadFile = File(...)):
             ids=ids,
             documents=txt_after_chunk_array,
             embeddings=processed_embeddings,
-            metadatas=[{"chunk_index": i, "Source": file.filename} for i in range(len(txt_after_chunk_array))]
+            metadatas=[{"chunk_index": i, "Source": file.filename, "UserName": userName} for i in range(len(txt_after_chunk_array))]
         )
 
         return JSONResponse(
@@ -180,7 +180,7 @@ async def extract(file: UploadFile = File(...)):
 
 
 @app.post("/generate")
-async def generate(query: str = Form(...)):
+async def generate(query: str = Form(...), userName: str = Form(...)):
     chroma_client = chromadb.PersistentClient(path="./chroma_data")
     collection = chroma_client.get_or_create_collection(
         name="DocumentsCollection",
@@ -195,6 +195,7 @@ async def generate(query: str = Form(...)):
     embedded_query = query_response["embedding"]
     results = collection.query(
             query_embeddings=[embedded_query],
+            where = {"UserName": userName},
             n_results=4
     )
     
