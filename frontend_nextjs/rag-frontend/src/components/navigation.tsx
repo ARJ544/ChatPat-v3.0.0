@@ -11,7 +11,7 @@ export default function NavigationBar() {
             <div className="flex items-center space-x-3 cursor-pointer">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-black-100 dark:bg-black-100 flex items-center justify-center dark:invert">
                     <Image
-                        // priority={true}
+                        priority={true}
                         src="/logo.png"
                         alt="SigmARJ Logo"
                         width={100}
