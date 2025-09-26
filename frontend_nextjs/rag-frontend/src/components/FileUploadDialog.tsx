@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
@@ -13,7 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import DropZone from "@/components/FileDropZone";
 import { Terminal } from "lucide-react";
-import DotLoader from "@/components/DotLoader";
+// import DotLoader from "@/components/DotLoader";
+import Loader from "@/app/loading";
 
 export function FileUploadDialog() {
     const [sourceAdded, setSourceAdded] = useState(false);
@@ -84,97 +85,98 @@ export function FileUploadDialog() {
 
     return (
         <>
-            isLoading ? <DotLoader backgroundColor="#ff4757" margin={10} /> :
-            <Dialog
-                open={open}
-                onOpenChange={(flse) => {
-                    // if (!sourceAdded || !open) {
-                    //     setTimeout(() => setOpen(true), 0);
-                    // }
-                    setShowFileAlert(!flse)
-                }}
-            >
-                <DialogContent
-                    onEscapeKeyDown={(e) => {
-                        e.preventDefault()
-                        if (!files || files.length < 1) {
-                            setShowFileAlert(true);
-                            setShowUserNameAlert(false);
-                        } else if (input.trim() === "") {
-                            setShowUserNameAlert(true);
-                            setShowFileAlert(false);
-                        }
-                    }}
-                    onPointerDownOutside={(e) => {
-                        e.preventDefault()
-                        if (!files || files.length < 1) {
-                            setShowFileAlert(true);
-                            setShowUserNameAlert(false);
-                        } else if (input.trim() === "") {
-                            setShowUserNameAlert(true);
-                            setShowFileAlert(false);
-                        }
+            {isLoading ? <Loader /> :
+                <Dialog
+                    open={open}
+                    onOpenChange={(flse) => {
+                        // if (!sourceAdded || !open) {
+                        //     setTimeout(() => setOpen(true), 0);
+                        // }
+                        setShowFileAlert(!flse)
                     }}
                 >
-                    <form onSubmit={handleAdd} className="flex flex-col gap-4">
-                        <DialogHeader>
-                            <DialogTitle>Add 1 Source at a time. (PDF only)</DialogTitle>
+                    <DialogContent
+                        onEscapeKeyDown={(e) => {
+                            e.preventDefault()
+                            if (!files || files.length < 1) {
+                                setShowFileAlert(true);
+                                setShowUserNameAlert(false);
+                            } else if (input.trim() === "") {
+                                setShowUserNameAlert(true);
+                                setShowFileAlert(false);
+                            }
+                        }}
+                        onPointerDownOutside={(e) => {
+                            e.preventDefault()
+                            if (!files || files.length < 1) {
+                                setShowFileAlert(true);
+                                setShowUserNameAlert(false);
+                            } else if (input.trim() === "") {
+                                setShowUserNameAlert(true);
+                                setShowFileAlert(false);
+                            }
+                        }}
+                    >
+                        <form onSubmit={handleAdd} className="flex flex-col gap-4">
+                            <DialogHeader>
+                                <DialogTitle>Add 1 Source at a time. (PDF only)</DialogTitle>
 
-                            <DialogDescription>
-                                Sources let SigmARJ base its responses on the information that matters most to you.
-                                (Examples: marketing plans, course reading, research notes, sales documents, etc.)
-                            </DialogDescription>
+                                <DialogDescription>
+                                    Sources let SigmARJ base its responses on the information that matters most to you.
+                                    (Examples: marketing plans, course reading, research notes, sales documents, etc.)
+                                </DialogDescription>
 
-                            <Input id="username" autoFocus autoComplete="on" type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter UserName" />
+                                <Input id="username" autoFocus autoComplete="on" type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter UserName" />
 
-                            <p><span className="text-sm text-emerald-500">Note: Always use the same UserName for all sources.</span></p>
+                                <p><span className="text-sm text-emerald-500">Note: Always use the same UserName for all sources.</span></p>
 
-                            <DropZone files={files} setFiles={setFiles} />
+                                <DropZone files={files} setFiles={setFiles} />
 
-                            {showFileAlert && (
-                                <Alert variant="destructive" className="mt-4">
-                                    <Terminal className="h-4 w-4" />
-                                    <AlertTitle>Warning!</AlertTitle>
-                                    <AlertDescription>
-                                        Please add a source before proceeding!
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                            {showUserNameAlert && (
-                                <Alert variant="destructive" className="mt-4">
-                                    <Terminal className="h-4 w-4" />
-                                    <AlertTitle>Warning!</AlertTitle>
-                                    <AlertDescription>
-                                        Please enter a UserName before proceeding!
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                            {showFileLimitAlert && (
-                                <Alert variant="destructive" className="mt-4">
-                                    <Terminal className="h-4 w-4" />
-                                    <AlertTitle>Warning!</AlertTitle>
-                                    <AlertDescription>
-                                        Only 1 pdf file is allowed at a time!
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                            {showFetchFailedAlert && (
-                                <Alert variant="destructive" className="mt-4">
-                                    <Terminal className="h-4 w-4" />
-                                    <AlertTitle>Error!!!</AlertTitle>
-                                    <AlertDescription>
-                                        Failed to upload file. Please try again.<br />
-                                        <p><span className="text-amber-600">{fetchError}</span></p>
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                        </DialogHeader>
-                        <DialogFooter>
-                            <Button type="submit" >Add</Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog >
+                                {showFileAlert && (
+                                    <Alert variant="destructive" className="mt-4">
+                                        <Terminal className="h-4 w-4" />
+                                        <AlertTitle>Warning!</AlertTitle>
+                                        <AlertDescription>
+                                            Please add a source before proceeding!
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                                {showUserNameAlert && (
+                                    <Alert variant="destructive" className="mt-4">
+                                        <Terminal className="h-4 w-4" />
+                                        <AlertTitle>Warning!</AlertTitle>
+                                        <AlertDescription>
+                                            Please enter a UserName before proceeding!
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                                {showFileLimitAlert && (
+                                    <Alert variant="destructive" className="mt-4">
+                                        <Terminal className="h-4 w-4" />
+                                        <AlertTitle>Warning!</AlertTitle>
+                                        <AlertDescription>
+                                            Only 1 pdf file is allowed at a time!
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                                {showFetchFailedAlert && (
+                                    <Alert variant="destructive" className="mt-4">
+                                        <Terminal className="h-4 w-4" />
+                                        <AlertTitle>Error!!!</AlertTitle>
+                                        <AlertDescription>
+                                            Failed to upload file. Please try again.<br />
+                                            <p><span className="text-amber-600">{fetchError}</span></p>
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                            </DialogHeader>
+                            <DialogFooter>
+                                <Button type="submit" >Add</Button>
+                            </DialogFooter>
+                        </form>
+                    </DialogContent>
+                </Dialog >
+            }
         </>
 
     );
