@@ -16,8 +16,12 @@ import { Terminal } from "lucide-react";
 // import DotLoader from "@/components/DotLoader";
 import Loader from "@/app/loading";
 
-export function FileUploadDialog() {
-    const [sourceAdded, setSourceAdded] = useState(false);
+type FileUploadDialogProps = {
+    sourceAdded: boolean;
+    setSourceAddedAction: (sourceAdded: boolean) => void;
+}
+
+export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUploadDialogProps) {
     const [input, setInput] = useState("");
     const [open, setOpen] = useState(true);
     const [files, setFiles] = useState<File[] | undefined>(undefined);
@@ -69,7 +73,7 @@ export function FileUploadDialog() {
             if (uploadResponse.ok) {
                 console.log("File uploaded successfully");
                 setIsLoading(false);
-                setSourceAdded(true);
+                setSourceAddedAction(true);
             }
         }
         catch (error) {
@@ -87,7 +91,7 @@ export function FileUploadDialog() {
         <>
             {isLoading ? <Loader /> :
                 <Dialog
-                    open={open}
+                    defaultOpen={open}
                     onOpenChange={(flse) => {
                         // if (!sourceAdded || !open) {
                         //     setTimeout(() => setOpen(true), 0);

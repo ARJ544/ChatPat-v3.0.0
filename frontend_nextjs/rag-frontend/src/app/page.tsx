@@ -1,10 +1,12 @@
-import Image from "next/image";
-import { FileUploadDialog } from "@/components/my_ui/FileUploadDialog";
+"use client"
+
+import ChatUi from "@/components/my_ui/ChatUi";
 
 export default function Home() {
+
   return (
-    <div className="">
-      <FileUploadDialog />
+    <div className="justify-items-center justify-center">
+      <ChatUi />
     </div>
   );
 }

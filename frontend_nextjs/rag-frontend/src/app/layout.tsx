@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-[#303134]`}
       >
         <ThemeProvider
           attribute="class"
@@ -36,8 +36,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavigationBar />
-          <main>{children}</main>
-          
+
+          <main className="pt-22">{children}</main>
+
         </ThemeProvider>
 
 
