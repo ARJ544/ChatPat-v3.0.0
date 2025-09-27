@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FileUploadDialog } from "@/components/FileUploadDialog";
+import { FileUploadDialog } from "@/components/my_ui/FileUploadDialog";
 
 export default function Home() {
   return (

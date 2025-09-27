@@ -11,7 +11,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
-import DropZone from "@/components/FileDropZone";
+import DropZone from "@/components/my_ui/FileDropZone";
 import { Terminal } from "lucide-react";
 // import DotLoader from "@/components/DotLoader";
 import Loader from "@/app/loading";

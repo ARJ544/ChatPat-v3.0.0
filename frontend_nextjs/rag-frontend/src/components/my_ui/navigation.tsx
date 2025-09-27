@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { ModeToggle } from "@/components/toggle-mode";
+import { ModeToggle } from "@/components/my_ui/toggle-mode";
 
 export default function NavigationBar() {
 
