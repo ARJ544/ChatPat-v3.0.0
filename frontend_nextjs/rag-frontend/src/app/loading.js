@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Loader = ({ dotColor = "#6c5ce7", dotSize = 15, dotMargin = 5 }) => {
+const Loader = ({ dotColor = "#327fa8", dotSize = 15, dotMargin = 5 }) => {
   const dots = [0, 1, 2];
 
   return (

@@ -1,6 +1,5 @@
 'use client';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/shadcn-io/dropzone';
-import { useState } from 'react';
 
 type DropZoneProps = {
   files: File[] | undefined;
