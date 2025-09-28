@@ -148,7 +148,7 @@ export default function ChatUi() {
                         </form>
                     ) : (
                         <Input
-                            className="h-12 flex-1"
+                            className="h-20 flex-1 placeholder:text-black placeholder:text-2xl dark:placeholder:text-white "
                             disabled
                             placeholder="Upload a source to get started."
                         />
