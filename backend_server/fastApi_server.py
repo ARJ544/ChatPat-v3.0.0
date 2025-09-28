@@ -181,6 +181,8 @@ async def extract(file: UploadFile = File(...), userName: str = Form(...)):
 
 @app.post("/generate")
 async def generate(query: str = Form(...), userName: str = Form(...)):
+    if (userName == ""):
+        return JSONResponse(status_code=400, content={"error": "No username"})
     chroma_client = chromadb.PersistentClient(path="./chroma_data")
     collection = chroma_client.get_or_create_collection(
         name="DocumentsCollection",
