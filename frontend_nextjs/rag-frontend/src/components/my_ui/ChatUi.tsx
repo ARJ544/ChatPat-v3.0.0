@@ -59,6 +59,10 @@ export default function ChatUi() {
                 const data = await queryResponse.json();
                 setBotMsg(data.response)
             }
+            if (!queryResponse.ok) {
+                const data = await queryResponse.json();
+                setBotMsg(data.error || "Unknown Error Occured. Try again Later or Refresh.")
+            }
         }
         catch (error) {
             setIsGenerating(false);
@@ -81,7 +85,6 @@ export default function ChatUi() {
                 />
             )}
 
-
             <FileUploadDialog sourceAdded={sourceAdded} userName={userName} setuserNameAction={setUserName} setSourceAddedAction={setSourceAdded} />
 
             <Card className="w-full border-gray-300 gap-1 shadow-2xl max-w-4/5 h-[calc(100vh-17vh)] dark:bg-[#1f1f1f] dark:border-gray-500 ">
@@ -93,7 +96,7 @@ export default function ChatUi() {
                     </CardDescription>
                 </CardHeader>
 
-                <ScrollArea className="flex-1 w-full rounded-md border-t-2 p-1 overflow-y-auto">
+                <ScrollArea className="flex-1 w-full rounded-md border-t-2 dark:border-t-gray-500 p-1 overflow-y-auto">
                     <CardContent>
                         {inputMsg}
                         <br /><br />
@@ -106,6 +109,7 @@ export default function ChatUi() {
                             <Input
                                 id="query"
                                 autoFocus
+                                autoComplete="off"
                                 type="text"
                                 placeholder="Start Typing..."
                                 className="h-12 flex-1"
