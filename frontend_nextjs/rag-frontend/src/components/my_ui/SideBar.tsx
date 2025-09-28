@@ -13,10 +13,10 @@ export default function Sidebar() {
 
         <Sheet>
             <SheetTrigger className="absolute left-[calc(100vw-88vw)] cursor-pointer justify-items-center"><FiSidebar className="dark:text-white text-2xl " /></SheetTrigger>
-            <SheetContent>
+            <SheetContent className="rounded-xl border-amber-50 border-t-amber-50- border-t-1 border-b-amber-50- border-b-1 ">
                 <SheetHeader>
-                    <SheetTitle className="text-2xl border-b-2">Sources</SheetTitle>
-                    <SheetDescription className="text-amber-700">
+                    <SheetTitle className="text-2xl border-b dark:border-b-amber-50">Sources</SheetTitle>
+                    <SheetDescription className="rounded-md pb-2 border-b-2 dark:border-b-gray-600 text-amber-700 ">
                         Only the current sources are being displayed, not the previous ones. However, answers may still come from previous sources if available.
                     </SheetDescription>
                 </SheetHeader>
