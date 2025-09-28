@@ -55,11 +55,11 @@ export default function ChatUi() {
                 // console.log(queryResponse.text());
                 // setInput(await queryResponse.text())
                 setIsGenerating(false);
-                console.log(queryResponse.json())
-                const data = await queryResponse.json();
-                setBotMsg(data.response)
+                const data = await queryResponse.text();
+                setBotMsg(data)
             }
             if (!queryResponse.ok) {
+                setIsGenerating(false);
                 const data = await queryResponse.json();
                 setBotMsg(data.error || "Unknown Error Occured. Try again Later or Refresh.")
             }

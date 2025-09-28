@@ -1,5 +1,5 @@
 from fastapi import FastAPI,File, UploadFile, Form
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from google import genai
@@ -230,10 +230,12 @@ async def generate(query: str = Form(...), userName: str = Form(...)):
             contents=[f"{question} {context} {exeption} {source}"]
         )
         # print(response.text)
-        return JSONResponse(
-            status_code=200,
-            content={"response": response.text}
-        )
+        # return JSONResponse(
+        #     status_code=200,
+        #     content={"response": response.text}
+        # )
+        print(response.text)
+        return PlainTextResponse(response.text)
     except Exception as e:
         if hasattr(e, "message") and "model is overloaded" in str(e.message):
             return JSONResponse(

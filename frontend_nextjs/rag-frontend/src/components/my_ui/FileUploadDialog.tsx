@@ -73,7 +73,7 @@ export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, set
 
             if (uploadResponse.ok) {
                 const data = await uploadResponse.json();
-                console.log("File uploaded successfully");
+                console.log(data.message);
                 setFetchError(data.message);
                 setIsLoading(false);
                 setSourceAddedAction(true);
