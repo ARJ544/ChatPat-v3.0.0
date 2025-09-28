@@ -18,11 +18,12 @@ import Loader from "@/app/loading";
 
 type FileUploadDialogProps = {
     sourceAdded: boolean;
+    userName: string;
+    setuserNameAction: (userName: string) => void;
     setSourceAddedAction: (sourceAdded: boolean) => void;
 }
 
-export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUploadDialogProps) {
-    const [input, setInput] = useState("");
+export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, setSourceAddedAction }: FileUploadDialogProps) {
     const [open, setOpen] = useState(true);
     const [files, setFiles] = useState<File[] | undefined>(undefined);
     const [showFileAlert, setShowFileAlert] = useState(false);
@@ -47,7 +48,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
             setShowFileAlert(false);
             setShowUserNameAlert(false);
             return;
-        } else if (input.trim() === "") {
+        } else if (userName.trim() === "") {
             setShowUserNameAlert(true);
             setShowFileAlert(false);
             setShowFileLimitAlert(false);
@@ -62,7 +63,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
         // Sending to backend
         const formData = new FormData();
         formData.append("file", files[0]);
-        formData.append("userName", input);
+        formData.append("userName", userName);
 
         try {
             const uploadResponse = await fetch("http://127.0.0.1:8000/extract", {
@@ -89,7 +90,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
 
     return (
         <>
-            {isLoading ? <Loader /> :
+            {isLoading ? <Loader justifyContent="center" alignItems="center" /> :
                 <Dialog
                     defaultOpen={open}
                     onOpenChange={(flse) => {
@@ -105,7 +106,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
                             if (!files || files.length < 1) {
                                 setShowFileAlert(true);
                                 setShowUserNameAlert(false);
-                            } else if (input.trim() === "") {
+                            } else if (userName.trim() === "") {
                                 setShowUserNameAlert(true);
                                 setShowFileAlert(false);
                             }
@@ -115,7 +116,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
                             if (!files || files.length < 1) {
                                 setShowFileAlert(true);
                                 setShowUserNameAlert(false);
-                            } else if (input.trim() === "") {
+                            } else if (userName.trim() === "") {
                                 setShowUserNameAlert(true);
                                 setShowFileAlert(false);
                             }
@@ -130,7 +131,7 @@ export function FileUploadDialog({ sourceAdded, setSourceAddedAction }: FileUplo
                                     (Examples: marketing plans, course reading, research notes, sales documents, etc.)
                                 </DialogDescription>
 
-                                <Input id="username" autoFocus autoComplete="on" type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter UserName" />
+                                <Input id="username" autoFocus autoComplete="on" type="text" value={userName} onChange={(e) => setuserNameAction(e.target.value)} placeholder="Enter UserName" />
 
                                 <p><span className="text-sm text-emerald-500">Note: Always use the same UserName for all sources.</span></p>
 
