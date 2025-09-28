@@ -72,9 +72,16 @@ export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, set
             });
 
             if (uploadResponse.ok) {
+                const data = await uploadResponse.json();
                 console.log("File uploaded successfully");
+                setFetchError(data.message);
                 setIsLoading(false);
                 setSourceAddedAction(true);
+            }
+            if (!uploadResponse.ok) {
+                const data = await uploadResponse.json();
+                setFetchError(data.error);
+                setIsLoading(false);
             }
         }
         catch (error) {
@@ -121,6 +128,7 @@ export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, set
                                 setShowFileAlert(false);
                             }
                         }}
+                        className="border-amber-50"
                     >
                         <form onSubmit={handleAdd} className="flex flex-col gap-4">
                             <DialogHeader>
