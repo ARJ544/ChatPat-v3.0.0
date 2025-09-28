@@ -66,20 +66,29 @@ def chunk_text(text, chunk_size=300, chunk_overlap=50):
     try:   
         if len(text.strip()) == 0:
             print("Extracted text is empty")
-            return {"error": "Extracted text is empty"}
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Extracted Text is Empty. Do not upload empty pdf."}
+            )
         else:
             chunks = splitter.split_text(text.replace("\n", " "))
             print(f"Number of chunks created: {len(chunks)}")
             return chunks
     except Exception as e:
-        return {"error": f"An error occurred during text chunking: {e}"}
+        return JSONResponse(
+                status_code=400,
+                content={"error": f"An error occurred during text chunking: {e}"}
+            )
     
 
 # Embedding the Chunks With Gemini-Embedding-Model
 def embed_text(txt_after_chunk_array):
     if len(txt_after_chunk_array) == 0:
             print("No text chunks to embed")
-            return {"success": False, "error": "No text chunks to embed"}
+            return JSONResponse(
+                status_code=400,
+                content={"success": False, "error": "No text chunks to embed"}
+            )
     else:
         try:
             embedding_dim = 768 # increase the dimension to increase the quality
@@ -104,13 +113,19 @@ def embed_text(txt_after_chunk_array):
             return processed_embeddings
         
         except ClientError as e:
-            return {"error": f"An error occurred during embedding: {e.message}"}
+            return JSONResponse(
+                status_code=400,
+                content={"error": f"An error occurred during embedding: {e.message}"}
+            )
 
 
 # Embed User query/promt with Gemini
 def embed_query(query_text):
     if len(query_text.strip()) == 0:
-        return {"success": False, "error": "Query is Empty"}
+        return JSONResponse(
+                status_code=400,
+                content={"success": False, "error": "Query is Empty"}
+            )
     
     else:
         try:
@@ -124,7 +139,10 @@ def embed_query(query_text):
             )
             return {"success": True, "embedding": query_response.embeddings[0].values}
         except ClientError as e:
-                return {"success": False, "error": f"Query embedding failed: {e.message}"}
+                return JSONResponse(
+                status_code=400,
+                content={"success": False, "error": f"Query embedding failed: {e.message}"}
+            )
 
 
 @app.post("/extract")
