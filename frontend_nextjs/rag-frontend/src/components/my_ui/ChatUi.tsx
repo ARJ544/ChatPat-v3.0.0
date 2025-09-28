@@ -1,12 +1,5 @@
 "use client"
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
+
 import { useState } from "react"
 import { FileUploadDialog } from "@/components/my_ui/FileUploadDialog";
 import {
@@ -23,86 +16,114 @@ import { Button } from "@/components/ui/button";
 import { FiSidebar } from "react-icons/fi";
 import { Input } from "@/components/ui/input";
 import Sidebar from "@/components/my_ui/SideBar";
+import Loader from "@/app/loading";
 
-const handleGenerate = (e: React.FormEvent) => {
 
-}
 
 export default function ChatUi() {
-    const [sourceAdded, setSourceAdded] = useState(false);
+    const [sourceAdded, setSourceAdded] = useState(true);
+    const [fileuploadOpen, setFileuploadOpen] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [query, setQuery] = useState("");
+    const [userName, setUserName] = useState("");
+    const [inputMsg, setDisplayedInputMsg] = useState("");
+    const [BotMsg, setBotMsg] = useState("");
 
+
+    const handleGenerate = async (e: React.FormEvent) => {
+        setDisplayedInputMsg(query);
+        e.preventDefault();
+
+        if (query.trim() === "") {
+            return;
+        } else if (userName === "") {
+            console.log("No username")
+        }
+
+        setIsGenerating(true);
+
+        const formData = new FormData();
+        formData.append("query", query);
+        formData.append("userName", userName);
+        try {
+            const queryResponse = await fetch("http://127.0.0.1:8000/generate", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (queryResponse.ok) {
+                // console.log(queryResponse.text());
+                // setInput(await queryResponse.text())
+                setIsGenerating(false);
+                console.log(queryResponse.json())
+                const data = await queryResponse.json();
+                setBotMsg(data.response)
+            }
+        }
+        catch (error) {
+            setIsGenerating(false);
+            console.log(error)
+            setBotMsg(String(error))
+        }
+    }
+    const handleUploadSource = () => {
+        setFileuploadOpen((prev) => !prev);
+    }
 
     return (
         <>
-            <FileUploadDialog sourceAdded={sourceAdded} setSourceAddedAction={setSourceAdded} />
-            <Card className="w-full border-gray-300 shadow-2xl max-w-4/5 h-[calc(100vh-17vh)] dark:bg-[#1f1f1f] dark:border-gray-500 ">
+            {fileuploadOpen && (
+                <FileUploadDialog
+                    sourceAdded={sourceAdded}
+                    userName={userName}
+                    setuserNameAction={setUserName}
+                    setSourceAddedAction={setSourceAdded}
+                />
+            )}
+
+
+            <FileUploadDialog sourceAdded={sourceAdded} userName={userName} setuserNameAction={setUserName} setSourceAddedAction={setSourceAdded} />
+
+            <Card className="w-full border-gray-300 gap-1 shadow-2xl max-w-4/5 h-[calc(100vh-17vh)] dark:bg-[#1f1f1f] dark:border-gray-500 ">
                 <CardHeader>
                     <Sidebar />
+                    <Button variant={"default"} className="text-xs h-6 overflow-ellipsis absolute right-[calc(100vw-88vw)] cursor-pointer justify-items-center" onClick={handleUploadSource}>Upload a Source</Button>
                     <CardDescription className="text-transparent">
                         -
                     </CardDescription>
                 </CardHeader>
 
-                <ScrollArea className="w-full h-[calc(100vh-49vh)] rounded-md border-t-2 p-1">
+                <ScrollArea className="flex-1 w-full rounded-md border-t-2 p-1 overflow-y-auto">
                     <CardContent>
-
-                        Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.Jokester began sneaking into the castle in the middle of the night and leaving
-                        jokes all over the place: under the king's pillow, in his soup, even in the
-                        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                        then, one day, the people of the kingdom discovered that the jokes left by
-                        Jokester were so funny that they couldn't help but laugh. And once they
-                        started laughing, they couldn't stop.
+                        {inputMsg}
+                        <br /><br />
+                        {isGenerating ? <Loader dotSize={7} dotMargin={1} justifyContent={null} alignItems={null} /> : BotMsg}
                     </CardContent>
                 </ScrollArea>
+                <CardFooter className="">
+                    {sourceAdded ? (
+                        <form onSubmit={handleGenerate} className="flex w-full gap-2 items-center-safe">
+                            <Input
+                                id="query"
+                                autoFocus
+                                type="text"
+                                placeholder="Start Typing..."
+                                className="h-12 flex-1"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                            <Button type="submit">Send</Button>
+                        </form>
+                    ) : (
+                        <Input
+                            className="h-12 flex-1"
+                            disabled
+                            placeholder="Upload a source to get started."
+                        />
+                    )}
+                </CardFooter>
 
             </Card>
-            {sourceAdded ? (
-                <form onSubmit={handleGenerate} className="flex flex-col gap-4">
-                    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl px-4 z-40">
-                        <Input
-                            id="query"
-                            autoFocus
-                            type="text"
-                            placeholder="Start Typing..."
-                            className="h-20"
-                        />
-                    </div>
-                </form>
-            ) : (
-                <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl px-4">
-                    <Input
-                        className="h-20"
-                        disabled
-                        placeholder="Upload a source to get started."
-                    />
-                </div>
-            )}
-
 
         </>
     );
