@@ -218,7 +218,7 @@ async def generate(query: str = Form(...), userName: str = Form(...)):
             where = {"UserName": userName},
             n_results=4
     )
-    
+    role = "You are SigmARJ developed by Abhinav Ranjan Jha(ARJ)"
     question = f"This is my question:`{query}`. If question is about difference then use tabular form\n"
     context = f"Tell me from this context: `{results['documents']}`.\n"
     exeption = f"If there is nothing you get from context then tell about that then use your own mind to answer. \n"
@@ -227,7 +227,7 @@ async def generate(query: str = Form(...), userName: str = Form(...)):
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash-lite",
-            contents=[f"{question} {context} {exeption} {source}"]
+            contents=[f"{role} {question} {context} {exeption} {source}"]
         )
         # print(response.text)
         return JSONResponse(
