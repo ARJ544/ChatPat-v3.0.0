@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Loader = ({ dotSize = 15, dotMargin = 5, justifyContent, alignItems }) => {
+const Loader = ({ dotSize = 15, dotMargin = 5, justifyContent = "center", alignItems = "center" }) => {
   const dots = [0, 1, 2];
   const styles = {
     dot: {

@@ -21,9 +21,10 @@ type FileUploadDialogProps = {
     userName: string;
     setuserNameAction: (userName: string) => void;
     setSourceAddedAction: (sourceAdded: boolean) => void;
+    setUploadedFileAction: (file: File) => void;
 }
 
-export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, setSourceAddedAction }: FileUploadDialogProps) {
+export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, setSourceAddedAction,setUploadedFileAction }: FileUploadDialogProps) {
     const [open, setOpen] = useState(true);
     const [files, setFiles] = useState<File[] | undefined>(undefined);
     const [showFileAlert, setShowFileAlert] = useState(false);
@@ -77,6 +78,7 @@ export function FileUploadDialog({ sourceAdded, userName, setuserNameAction, set
                 setFetchError(data.message);
                 setIsLoading(false);
                 setSourceAddedAction(true);
+                setUploadedFileAction(files[0]);
             }
             if (!uploadResponse.ok) {
                 const data = await uploadResponse.json();
