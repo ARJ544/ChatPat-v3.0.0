@@ -3,17 +3,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Loader = ({ dotColor = "#327fa8", dotSize = 15, dotMargin = 5 }) => {
+const Loader = ({ dotSize = 15, dotMargin = 5, justifyContent, alignItems }) => {
   const dots = [0, 1, 2];
+  const styles = {
+    dot: {
+      borderRadius: "50%",
+      animation: "bounce 1.4s infinite ease-in-out both",
+    },
+  };
 
   return (
-    <div style={styles.container}>
+    <div className={`flex justify-${justifyContent} items-${alignItems} h-screen`}>
       {dots.map((_, i) => (
         <div
           key={i}
+          className="rounded-full bg-black dark:bg-white animate-bounce"
           style={{
             ...styles.dot,
-            backgroundColor: dotColor,
             width: dotSize,
             height: dotSize,
             margin: dotMargin,
@@ -35,23 +41,14 @@ const Loader = ({ dotColor = "#327fa8", dotSize = 15, dotMargin = 5 }) => {
   );
 };
 
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh", // full screen
-  },
-  dot: {
-    borderRadius: "50%",
-    animation: "bounce 1.4s infinite ease-in-out both",
-  },
-};
+
 
 Loader.propTypes = {
   dotColor: PropTypes.string,
   dotSize: PropTypes.number,
   dotMargin: PropTypes.number,
+  justifyContent: PropTypes.string | null,
+  alignItems: PropTypes.string | null
 };
 
 export default Loader;
