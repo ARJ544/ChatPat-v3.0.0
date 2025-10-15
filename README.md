@@ -1,4 +1,4 @@
-# ChatPat-v3.0.0 (UNDER_DEVELOPMENT) (Retrieval-Augmented Generation)
+# ChatPat-v3.0.0 (Retrieval-Augmented Generation)
 ChatPat is a family of multimodal, generative artificial intelligence (AI) models developed by Abhinav (ARJ) that can understand and combine information from formats like text, also can analyze Documents, Images, Pdf.
 
 This is still (UNDER_DEVELOPMENT)
